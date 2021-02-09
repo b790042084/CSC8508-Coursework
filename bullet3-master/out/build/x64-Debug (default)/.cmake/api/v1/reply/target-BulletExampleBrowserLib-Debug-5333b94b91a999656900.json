@@ -1,0 +1,355 @@
+{
+	"archive" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "/machine:x64",
+				"role" : "flags"
+			}
+		]
+	},
+	"artifacts" : 
+	[
+		{
+			"path" : "lib/BulletExampleBrowserLib_Debug.lib"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"ADD_LIBRARY",
+			"INSTALL",
+			"ADD_DEFINITIONS",
+			"add_definitions",
+			"INCLUDE_DIRECTORIES"
+		],
+		"files" : 
+		[
+			"examples/ExampleBrowser/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 29,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 75,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 16,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 99,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 2,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 13,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 86,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "/GR- /Gy /GF /DWIN32  /W3  /EHsc /fp:fast /wd4244 /wd4267 /MTd /Zi /Ob0 /Od /RTC1 -D_DEBUG"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 3,
+					"define" : "GLEW_STATIC"
+				},
+				{
+					"backtrace" : 4,
+					"define" : "INCLUDE_CLOTH_DEMOS"
+				},
+				{
+					"define" : "USE_GRAPHICAL_BENCHMARK"
+				},
+				{
+					"define" : "_CRT_SECURE_NO_DEPRECATE"
+				},
+				{
+					"define" : "_CRT_SECURE_NO_WARNINGS"
+				},
+				{
+					"define" : "_SCL_SECURE_NO_WARNINGS"
+				},
+				{
+					"define" : "_WIN64"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 5,
+					"path" : "C:/Users/sambu/source/repos/CSC8508/bullet3-master/examples/ExampleBrowser/."
+				},
+				{
+					"backtrace" : 5,
+					"path" : "C:/Users/sambu/source/repos/CSC8508/bullet3-master/src"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "C:/Users/sambu/source/repos/CSC8508/bullet3-master/examples/ThirdPartyLibs"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "C:/Users/sambu/source/repos/CSC8508/bullet3-master/examples/ThirdPartyLibs/glad"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/Users/sambu/source/repos/CSC8508/bullet3-master/examples/SharedMemory"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				5,
+				7,
+				9,
+				13,
+				15,
+				17,
+				19,
+				22
+			]
+		}
+	],
+	"id" : "BulletExampleBrowserLib::@d330fae0f4836adb95cb",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "C:/Users/sambu/Source/Repos/CSC8508/bullet3-master/out/install/x64-Debug (default)"
+		}
+	},
+	"name" : "BulletExampleBrowserLib",
+	"nameOnDisk" : "BulletExampleBrowserLib_Debug.lib",
+	"paths" : 
+	{
+		"build" : "examples/ExampleBrowser",
+		"source" : "examples/ExampleBrowser"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				5,
+				7,
+				9,
+				13,
+				15,
+				17,
+				19,
+				22
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				4,
+				6,
+				8,
+				10,
+				11,
+				12,
+				14,
+				16,
+				18,
+				20,
+				21,
+				23
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/OpenGLExampleBrowser.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/OpenGLGuiHelper.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/GL_ShapeDrawer.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/CollisionShape2TriangleMesh.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/ExampleBrowser/CollisionShape2TriangleMesh.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/Utils/b3Clock.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/Utils/b3Clock.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/Utils/ChromeTraceUtil.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/Utils/ChromeTraceUtil.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/Utils/b3ResourcePath.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/Utils/b3ResourcePath.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/Utils/b3ERPCFMHelper.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/Utils/b3ReferenceFrameHelper.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/GraphingTexture.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/GraphingTexture.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/GwenParameterInterface.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/GwenParameterInterface.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/GwenProfileWindow.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/GwenProfileWindow.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/GwenTextureWindow.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/GwenTextureWindow.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/gwenInternalData.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/gwenUserInterface.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "examples/ExampleBrowser/GwenGUISupport/gwenUserInterface.h",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}
