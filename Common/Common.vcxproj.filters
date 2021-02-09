@@ -28,12 +28,6 @@
     <Filter Include="Asset Handling">
       <UniqueIdentifier>{1d0b54c1-f5de-4083-b62a-78e5b7ec9b10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AI">
-      <UniqueIdentifier>{ba9384e4-31a5-4147-9fa8-03e33d2bdcd7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Pathfinding">
-      <UniqueIdentifier>{4aad0092-8e63-4150-a85f-e74f81d8d308}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -117,45 +111,6 @@
     <ClCompile Include="MeshMaterial.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\EnemyStateGameObject.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\PathfindingEnemyStateGameObject.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\PatrolEnemyStateGameObject.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\PlatformStateGameObject.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\PushdownMachine.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\StateGameObject.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\StateMachine.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\NavigationGrid.cpp">
-      <Filter>Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\NavigationMesh.cpp">
-      <Filter>Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\GameWorld.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\Debug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSC8503\CSC8503Common\RenderObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -238,63 +193,6 @@
     </ClInclude>
     <ClInclude Include="MeshMaterial.h">
       <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\EnemyStateGameObject.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\IntroScreen.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\PathfindingEnemyStateGameObject.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\PatrolEnemyStateGameObject.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\PauseScreen.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\PlatformStateGameObject.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\PushdownMachine.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\PushdownState.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\State.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\StateGameObject.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\StateMachine.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\StateTransition.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\NavigationGrid.h">
-      <Filter>Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\NavigationMap.h">
-      <Filter>Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\NavigationMesh.h">
-      <Filter>Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\NavigationPath.h">
-      <Filter>Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\RenderObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\GlobalVariables.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSC8503\CSC8503Common\Debug.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

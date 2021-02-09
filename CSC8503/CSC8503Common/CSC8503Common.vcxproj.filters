@@ -1,39 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{9aee0dfe-4d09-49bb-903b-0c7f2a8a6134}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
+    <Filter Include="AI">
+      <UniqueIdentifier>{6da9b474-2d23-4371-84db-8c52f54fbf9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\CollisionDetection">
+      <UniqueIdentifier>{7c45a941-5f3a-4dc9-b113-df0c37be8dd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\State Machines">
+      <UniqueIdentifier>{d505edd8-d514-4b6a-afc2-bbbcf0519603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Behaviour Trees">
+      <UniqueIdentifier>{1f9c032a-67c8-4b9b-ab56-f60b5a0e3a07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Pushdown Automata">
+      <UniqueIdentifier>{83daf491-4e0b-4fde-86a2-a3c971d8dacd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pathfinding">
+      <UniqueIdentifier>{0b2c094a-c927-467a-91ed-973f45426add}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{1d6c9e10-6269-415f-bcf3-18b51bc3cf01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="CollisionDetection">
-      <UniqueIdentifier>{7c45a941-5f3a-4dc9-b113-df0c37be8dd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Physics">
-      <UniqueIdentifier>{9aee0dfe-4d09-49bb-903b-0c7f2a8a6134}</UniqueIdentifier>
+    <Filter Include="Other">
+      <UniqueIdentifier>{c3db9f5e-7a1c-4c2a-8563-13e0393a6bcb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWorld.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="CollisionDetection.h">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsObject.h">
       <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="Ray.h">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClInclude>
     <ClInclude Include="Constraint.h">
       <Filter>Physics</Filter>
@@ -42,96 +56,153 @@
       <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="SphereVolume.h">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClInclude>
     <ClInclude Include="OBBVolume.h">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClInclude>
     <ClInclude Include="AABBVolume.h">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClInclude>
     <ClInclude Include="CollisionVolume.h">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClInclude>
     <ClInclude Include="QuadTree.h">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClInclude>
     <ClInclude Include="CapsuleVolume.h">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClInclude>
     <ClInclude Include="PositionConstraint.h">
       <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="IceObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="LavaObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="TrampolineObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="FloorObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="SphereObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="CubeObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="RotatingCubeObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="EnemyObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="CapsuleObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="PlayerObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="SpringObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="FinishObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="PickupObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="PowerupObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="CoinObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateGameObject.h">
+      <Filter>AI\State Machines</Filter>
+    </ClInclude>
+    <ClInclude Include="PathfindingEnemyStateGameObject.h">
+      <Filter>AI\State Machines</Filter>
+    </ClInclude>
+    <ClInclude Include="PatrolEnemyStateGameObject.h">
+      <Filter>AI\State Machines</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformStateGameObject.h">
+      <Filter>AI\State Machines</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>AI\State Machines</Filter>
+    </ClInclude>
+    <ClInclude Include="StateGameObject.h">
+      <Filter>AI\State Machines</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>AI\State Machines</Filter>
+    </ClInclude>
+    <ClInclude Include="StateTransition.h">
+      <Filter>AI\State Machines</Filter>
     </ClInclude>
     <ClInclude Include="BehaviourAction.h">
-      <Filter>Header Files</Filter>
+      <Filter>AI\Behaviour Trees</Filter>
     </ClInclude>
     <ClInclude Include="BehaviourNode.h">
-      <Filter>Header Files</Filter>
+      <Filter>AI\Behaviour Trees</Filter>
     </ClInclude>
     <ClInclude Include="BehaviourNodeWithChildren.h">
-      <Filter>Header Files</Filter>
+      <Filter>AI\Behaviour Trees</Filter>
     </ClInclude>
     <ClInclude Include="BehaviourSelector.h">
-      <Filter>Header Files</Filter>
+      <Filter>AI\Behaviour Trees</Filter>
     </ClInclude>
     <ClInclude Include="BehaviourSequence.h">
-      <Filter>Header Files</Filter>
+      <Filter>AI\Behaviour Trees</Filter>
     </ClInclude>
     <ClInclude Include="BehaviourTreeEnemy.h">
-      <Filter>Header Files</Filter>
+      <Filter>AI\Behaviour Trees</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScreen.h">
+      <Filter>AI\Pushdown Automata</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseScreen.h">
+      <Filter>AI\Pushdown Automata</Filter>
+    </ClInclude>
+    <ClInclude Include="PushdownMachine.h">
+      <Filter>AI\Pushdown Automata</Filter>
+    </ClInclude>
+    <ClInclude Include="PushdownState.h">
+      <Filter>AI\Pushdown Automata</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariables.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationGrid.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationMap.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationMesh.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationPath.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObject.h">
+      <Filter>Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionDetection.cpp">
-      <Filter>CollisionDetection</Filter>
+      <Filter>Physics\CollisionDetection</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsObject.cpp">
       <Filter>Physics</Filter>
@@ -142,8 +213,50 @@
     <ClCompile Include="PositionConstraint.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="PathfindingEnemyStateGameObject.cpp">
+      <Filter>AI\State Machines</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateGameObject.cpp">
+      <Filter>AI\State Machines</Filter>
+    </ClCompile>
+    <ClCompile Include="PatrolEnemyStateGameObject.cpp">
+      <Filter>AI\State Machines</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatformStateGameObject.cpp">
+      <Filter>AI\State Machines</Filter>
+    </ClCompile>
+    <ClCompile Include="StateGameObject.cpp">
+      <Filter>AI\State Machines</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>AI\State Machines</Filter>
+    </ClCompile>
     <ClCompile Include="BehaviourTreeEnemy.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>AI\Behaviour Trees</Filter>
+    </ClCompile>
+    <ClCompile Include="PushdownMachine.cpp">
+      <Filter>AI\Pushdown Automata</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationGrid.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationMesh.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderObject.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWorld.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Game Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

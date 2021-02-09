@@ -199,19 +199,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\CSC8503\CSC8503Common\Debug.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\EnemyStateGameObject.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\GameObject.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\GameWorld.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\NavigationGrid.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\NavigationMesh.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\PathfindingEnemyStateGameObject.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\PatrolEnemyStateGameObject.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\PlatformStateGameObject.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\PushdownMachine.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\RenderObject.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\StateGameObject.cpp" />
-    <ClCompile Include="..\CSC8503\CSC8503Common\StateMachine.cpp" />
     <ClCompile Include="Assets.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameTimer.cpp" />
@@ -241,25 +228,6 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\CSC8503\CSC8503Common\Debug.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\EnemyStateGameObject.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\GlobalVariables.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\IntroScreen.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\NavigationGrid.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\NavigationMap.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\NavigationMesh.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\NavigationPath.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\PathfindingEnemyStateGameObject.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\PatrolEnemyStateGameObject.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\PauseScreen.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\PlatformStateGameObject.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\PushdownMachine.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\PushdownState.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\RenderObject.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\State.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\StateGameObject.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\StateMachine.h" />
-    <ClInclude Include="..\CSC8503\CSC8503Common\StateTransition.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Assets.h" />
     <ClInclude Include="GameTimer.h" />
