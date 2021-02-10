@@ -193,12 +193,6 @@
     <ClInclude Include="NavigationPath.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderObject.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionDetection.cpp">
@@ -245,12 +239,6 @@
     </ClCompile>
     <ClCompile Include="NavigationMesh.cpp">
       <Filter>Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Debug.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderObject.cpp">
-      <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="GameWorld.cpp">
       <Filter>Other</Filter>

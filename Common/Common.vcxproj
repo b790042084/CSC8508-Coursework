@@ -199,6 +199,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\CSC8503\CSC8503Common\Debug.cpp" />
+    <ClCompile Include="..\CSC8503\CSC8503Common\RenderObject.cpp" />
     <ClCompile Include="Assets.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameTimer.cpp" />
@@ -228,6 +230,8 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CSC8503\CSC8503Common\Debug.h" />
+    <ClInclude Include="..\CSC8503\CSC8503Common\RenderObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Assets.h" />
     <ClInclude Include="GameTimer.h" />
