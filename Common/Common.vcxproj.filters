@@ -111,6 +111,12 @@
     <ClCompile Include="MeshMaterial.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\CSC8503\CSC8503Common\RenderObject.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CSC8503\CSC8503Common\Debug.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -192,6 +198,12 @@
       <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="MeshMaterial.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CSC8503\CSC8503Common\RenderObject.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CSC8503\CSC8503Common\Debug.h">
       <Filter>Rendering</Filter>
     </ClInclude>
   </ItemGroup>
