@@ -19,6 +19,18 @@ PhysicsObject::PhysicsObject(Transform* parentTransform, const CollisionVolume* 
 	isStatic = false;
 }
 
+PhysicsObject::PhysicsObject(Transform* parentTransform, PxRigidActor* p, const CollisionVolume* parentVolume)
+{
+	transform = parentTransform;
+	pxTrans = p;
+	volume = parentVolume;
+	inverseMass = 1.0f;
+	elasticity = 0.8f;
+	friction = 0.8f;
+	isAsleep = true;
+	isStatic = false;
+}
+
 PhysicsObject::~PhysicsObject() {
 
 }

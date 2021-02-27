@@ -35,65 +35,38 @@
 #include "../CSC8503Common/PauseScreen.h"
 #include "../CSC8503Common/GlobalVariables.h"
 #include "../CSC8503Common/BehaviourTreeEnemy.h"
+#include <ctype.h>
+#include "PxPhysicsAPI.h"
+#include "SnippetPrint.h"
+#include "SnippetPVD.h"
 
 namespace NCL {
 	namespace CSC8503 {
 		class PlayerObject;
 		enum class FinishType { INGAME, TIMEOUT, WIN, LOSE };
-		class TutorialGame : public PushdownState {
+		class TutorialGame {
 		public:
 			TutorialGame();
+			GameObject* AddPxCubeToWorld(GameObject* cube, PxRigidActor* body, const Vector3& position, Vector3 dimensions);
+			GameObject* AddPxSphereToWorld(GameObject* cube, PxRigidActor* body, const Vector3& position, float radius);
+			GameObject* AddPxCapsuleToWorld(GameObject* capsule, PxRigidActor* body, const Vector3& position, float radius, float halfHeight);
+			GameObject* AddPxFloorToWorld(GameObject* cube, PxRigidStatic* body, const Vector3& position, Vector3 dimensions);
+
 			~TutorialGame();
 
-			/* As our entire game is a pushdown state, we have our update method here */
-			PushdownResult OnUpdate(float dt, PushdownState** newState) override {
-				/* Rolling FPS calculations */
-				fpsTimer -= dt;
-				++framesPerSecond;
-				if (fpsTimer < 0.0f) {
-					float alpha = 0.1f;
-					avgFps = alpha * avgFps + (1.0 - alpha) * framesPerSecond;
-					framesPerSecond = 0;
-					fpsTimer = 1.0f;
-				}
-				renderer->DrawString("FPS:" + std::to_string(avgFps), Vector2(0, 5), Debug::WHITE, 15.0f);
-
-				currentLevel == 0 ? UpdateMenu(dt) : UpdateLevel(dt);
+			void Update(float dt) {
+				UpdateLevel(dt);
 				physics->ClearDeletedCollisions();
 				Debug::FlushRenderables(dt);
 				world->UpdateWorld(dt);
 				renderer->Update(dt);
 				renderer->Render();
-
-				/* Pushdown the pasuse state when activated */
-				if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::P)) {
-					if (currentLevel != 0) {
-						*newState = new PauseScreen();
-						renderer->DrawString("Paused(P)", Vector2(40, 50), Debug::WHITE, 30.0f);
-						renderer->Render();
-						return PushdownResult::Push;
-					}
-				}
-				/* Pop the current state if the user exits */
-				if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::ESCAPE) || timeOut > 5.0f) {
-					if (currentLevel != 0) {
-						renderer->DrawString("Returning to Menu", Vector2(25, 50), Debug::WHITE, 30.0f);
-						renderer->Render();
-					}
-					else
-						quit = true;
-					return PushdownResult::Pop;
-				}
-				return PushdownResult::NoChange;
-			};
-			void OnAwake() override {
 			}
+
 			void UpdateMenu(float dt);
 			void UpdateLevel(float dt);
 			void DrawDebugInfo();
 			void CheckFinished(float dt);
-			void UpdateLevel1(float dt);
-			void FireObjects();
 			void UpdateLevel2(float dt);
 			void EnemyRaycast();
 
@@ -109,14 +82,7 @@ namespace NCL {
 			void InitGameExamples(int level);
 			void InitPlayer();
 			void InitGameObstacles(int level);
-			void InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius);
-			void InitCubeGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, const Vector3& cubeDims);
-			void InitMixedGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing);
 			
-			GameObject* AddFloorToWorld(GameObject* floor, const Vector3& position, const Vector3& size, const Matrix4& orientation = Matrix4());
-			GameObject* AddSphereToWorld(GameObject* sphere, const Vector3& position, float radius);
-			GameObject* AddCubeToWorld(GameObject* cube, const Vector3& position, Vector3 dimensions);
-			GameObject* AddCapsuleToWorld(GameObject* capsule, const Vector3& position, float halfHeight, float radius);
 			void AddBridgeToWorld(Vector3 startPos);
 
 			GameObject* AddPlayerToWorld(GameObject* p, const Vector3& position);

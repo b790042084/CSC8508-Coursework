@@ -6,7 +6,8 @@
 #include "TutorialGame.h"
 #include "../../Common/Window.h"
 #include "../CSC8503Common/PushdownMachine.h"
-#include "../CSC8503Common/IntroScreen.h"
+extern int snippetMain(int, const char* const*, TutorialGame* t);
+
 using namespace NCL;
 using namespace CSC8503;
 /* The main function should look pretty familar to you!
@@ -19,7 +20,7 @@ This time, we've added some extra functionality to the window class - we can
 hide or show the */
 void GamePushdownAutomata(Window* w);
 
-int main() {
+int main(int argc, char** argv) {
 	Window* w = Window::CreateGameWindow("Fall Guys!", 1280, 720, false);
 	if (!w->HasInitialised())
 		return -1;
@@ -28,16 +29,14 @@ int main() {
 	w->ShowOSPointer(false);
 	w->LockMouseToWindow(true);
 	w->GetTimer()->GetTimeDeltaSeconds(); //Clear the timer so we don't get a larget first dt!
+	//PushdownMachine machine(new IntroScreen);
+	TutorialGame* t = new TutorialGame();
+	snippetMain(1, NULL, t);
 
-	GamePushdownAutomata(w);
-	Window::DestroyGameWindow();		// After we have exited the automata (we've quit) destroy the window
-}
-
-/* This method drives the entire game on a pushdown automata */
-void GamePushdownAutomata(Window* w) {
-	PushdownMachine machine(new IntroScreen);
 	while (w->UpdateWindow()) {
+		snippetMain(0, NULL, t);
 		float dt = w->GetTimer()->GetTimeDeltaSeconds();
+		t->Update(dt);
 		if (dt > 0.1f) {
 			std::cout << "Skipping large time delta" << std::endl;
 			continue;
@@ -46,9 +45,18 @@ void GamePushdownAutomata(Window* w) {
 			w->ShowConsole(true);
 		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::NEXT))
 			w->ShowConsole(false);
+		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::ESCAPE))
+			break;
 		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::T))
 			w->SetWindowPosition(0, 0);
-		if (!machine.Update(dt))
-			return;
+		/*if (!machine.Update(dt))
+			return;*/
 	}
+	Window::DestroyGameWindow();		// After we have exited the automata (we've quit) destroy the window
+	return 0;
+}
+
+/* This method drives the entire game on a pushdown automata */
+void GamePushdownAutomata(Window* w) {
+	
 }

@@ -71,6 +71,7 @@ void GameWorld::UpdateWorld(float dt) {
 	if (shuffleConstraints) 
 		std::shuffle(constraints.begin(), constraints.end(), g);
 	for (auto& i : gameObjects) {
+		i->Update();
 		if (i->GetTimeAlive() > 40.0f)		// Objects living longer than 40s are destroyed
 			i->SetIsActive(false);
 		if (i->GetIsSafeForDeletion())		// Only when objects have been removed from any associated collision list, can we delete them

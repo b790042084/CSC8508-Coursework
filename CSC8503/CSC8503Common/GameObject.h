@@ -16,7 +16,18 @@ namespace NCL {
 		public:
 			GameObject(string name = "");
 			~GameObject();
-
+			Quaternion GetRegularQuaternion(PxQuat q) {
+				return Quaternion(q.x, q.y, q.z, q.w);
+			}
+			Vector3 GetRegularVector3(PxVec3 pxVec) {
+				return Vector3(pxVec.x, pxVec.y, pxVec.z);
+			}
+			void Update() {
+				if (physicsObject->pxTrans != nullptr) {
+					transform.SetOrientation(GetRegularQuaternion(physicsObject->pxTrans->getGlobalPose().q));
+					transform.SetPosition(GetRegularVector3(physicsObject->pxTrans->getGlobalPose().p));
+				}
+			}
 			void SetName(string val) {
 				name = val;
 			}

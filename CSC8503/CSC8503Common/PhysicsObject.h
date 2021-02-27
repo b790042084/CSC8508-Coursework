@@ -7,6 +7,12 @@
 #include "../../Common/Vector3.h"
 #include "../../Common/Matrix3.h"
 
+#include <ctype.h>
+#include "../../include/PxPhysicsAPI.h"
+#include "../../include/foundation/Px.h"
+#include "../../include/foundation/PxTransform.h"
+using namespace physx;
+
 using namespace NCL::Maths;
 
 namespace NCL {
@@ -18,6 +24,7 @@ namespace NCL {
 		class PhysicsObject {
 		public:
 			PhysicsObject(Transform* parentTransform, const CollisionVolume* parentVolume);
+			PhysicsObject(Transform* parentTransform, PxRigidActor* pxTrans, const CollisionVolume* parentVolume);
 			~PhysicsObject();
 
 			void SetElasticity(float val) {
@@ -102,6 +109,8 @@ namespace NCL {
 			bool GetIsAsleep() const {
 				return isAsleep;
 			}
+			PxRigidActor* pxTrans;
+
 		protected:
 			const CollisionVolume* volume;
 			Transform* transform;

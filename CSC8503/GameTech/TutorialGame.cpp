@@ -4,6 +4,7 @@
  *                170348069
  *			Tutorial Game Implementation		 */
 #include "TutorialGame.h"
+using namespace physx;
 using namespace NCL;
 using namespace CSC8503;
 
@@ -23,7 +24,7 @@ TutorialGame::TutorialGame() {
 	Debug::SetRenderer(renderer);
 	player = nullptr;
 	lockedOrientation = true;
-	currentLevel = 0;
+	currentLevel = 1;
 	currentlySelected = 1;
 	avgFps = 1.0f;
 	framesPerSecond = 0;
@@ -226,7 +227,7 @@ void TutorialGame::UpdateLevel(float dt) {
 		world->GetMainCamera()->SetState(camState);
 	}
 
-	physics->Update(dt);		// Update our physics
+	//physics->Update(dt);		// Update our physics
 
 	/* Change how we move the camera dependng if we have a locked object */
 	if (lockedObject) {
@@ -240,7 +241,7 @@ void TutorialGame::UpdateLevel(float dt) {
 	renderer->DrawString("Exit to Menu (ESC)", Vector2(75, 5), Debug::WHITE, textSize);
 	renderer->DrawString("Pause(P)", Vector2(88, 15), Debug::WHITE, textSize);
 
-	currentLevel == 1 ? UpdateLevel1(dt) : UpdateLevel2(dt);		// Update level specific game logic 
+	//currentLevel == 1 ? UpdateLevel1(dt) : UpdateLevel2(dt);		// Update level specific game logic 
 
 	lockedObject ? LockedObjectMovement(dt) : DebugObjectMovement();
 	CheckFinished(dt);		// Should the game have ended? 
@@ -346,91 +347,91 @@ void TutorialGame::CheckFinished(float dt) {
 	}
 }
 
-/* Updates specific logic for obstacle course */
-void TutorialGame::UpdateLevel1(float dt) {
-	for (auto& p : platforms)
-		p->Update(dt);
-
-	for (auto& e : enemies) {
-		e->Update(dt);
-		currentEnemy = e;
-		EnemyRaycast();
-	}
-
-	for (auto& e : behaviourEnemies) {
-		e->Update(dt);
-		currentEnemy = e;
-		EnemyRaycast();
-	}
-
-	reloadTime += dt;
-	if (reloadTime > 2.0f) {
-		FireObjects();
-		reloadTime = 0.0f;
-	}
-
-	for (auto& o : projectiles)
-		o->StepTimeAlive(dt);		// Any objects that have been dynamically added should be removed eventually
-
-	/* Setting checkpoints and camera switches */
-	if (player) {
-		switch ((int)player->GetTransform().GetPosition().z) {
-		case 0:
-			player->SetSpawnPos({ 0, 10, 50 });
-			break;
-		case -150:
-			camState = CameraState::TOPDOWN;
-			world->GetMainCamera()->SetState(camState);
-			break;
-		case -265:
-			player->SetSpawnPos({ 0, 10, -265 });
-			break;
-		case -445:
-			camState = CameraState::THIRDPERSON;
-			world->GetMainCamera()->SetState(camState);
-			break;
-		case -620:
-			player->SetSpawnPos({ 0, 10, -620 });
-			break;
-		case -840:
-			player->SetSpawnPos({ 0, 10, -840 });
-			camState = CameraState::TOPDOWN;
-			world->GetMainCamera()->SetState(camState);
-			break;
-		case -990:
-			if ((int)player->GetTransform().GetPosition().x == -30 && (int)player->GetTransform().GetPosition().y > 20)
-				player->SetSpawnPos({ -30, 50, -990 });
-			else if ((int)player->GetTransform().GetPosition().x >= 120 && (int)player->GetTransform().GetPosition().y > 20) {
-				camState = CameraState::TOPDOWN;
-				world->GetMainCamera()->SetState(camState);
-			}
-			else {
-				camState = CameraState::THIRDPERSON;
-				world->GetMainCamera()->SetState(camState);
-			}
-			break;
-		}
-	}
-}
-
-/* Fires objects across the platform */
-void TutorialGame::FireObjects() {
-	SphereObject* sphere = new SphereObject;
-	rand() % 2 ? projectiles.push_back(AddSphereToWorld(sphere, Vector3(90, 5, ((rand() % (200 - 210 + 1)) + 200) * -1), 3)) :
-		projectiles.push_back(AddSphereToWorld(sphere, Vector3(90, 5, ((rand() % (250 - 240 + 1)) + 240) * -1), 3));
-	sphere->GetPhysicsObject()->SetLinearVelocity(Vector3(-150, 0, 0));
-
-	switch (rand() % 2) {
-	case 0:
-		projectiles.push_back(AddSphereToWorld(new SphereObject, platforms.at(1)->GetTransform().GetPosition() - Vector3(0, 10, 0), 2));
-		break;
-	case 1:
-		CapsuleObject * capsule = new CapsuleObject;
-		projectiles.push_back(AddCapsuleToWorld(capsule, platforms.at(1)->GetTransform().GetPosition() - Vector3(0, 10, 0), 4, 2));
-		capsule->GetTransform().SetOrientation(Matrix4::Rotation(90, Vector3(0, 0, 1)));
-		break;
-	}
-}
+///* Updates specific logic for obstacle course */
+//void TutorialGame::UpdateLevel1(float dt) {
+//	for (auto& p : platforms)
+//		p->Update(dt);
+//
+//	for (auto& e : enemies) {
+//		e->Update(dt);
+//		currentEnemy = e;
+//		EnemyRaycast();
+//	}
+//
+//	for (auto& e : behaviourEnemies) {
+//		e->Update(dt);
+//		currentEnemy = e;
+//		EnemyRaycast();
+//	}
+//
+//	reloadTime += dt;
+//	if (reloadTime > 2.0f) {
+//		FireObjects();
+//		reloadTime = 0.0f;
+//	}
+//
+//	for (auto& o : projectiles)
+//		o->StepTimeAlive(dt);		// Any objects that have been dynamically added should be removed eventually
+//
+//	/* Setting checkpoints and camera switches */
+//	if (player) {
+//		switch ((int)player->GetTransform().GetPosition().z) {
+//		case 0:
+//			player->SetSpawnPos({ 0, 10, 50 });
+//			break;
+//		case -150:
+//			camState = CameraState::TOPDOWN;
+//			world->GetMainCamera()->SetState(camState);
+//			break;
+//		case -265:
+//			player->SetSpawnPos({ 0, 10, -265 });
+//			break;
+//		case -445:
+//			camState = CameraState::THIRDPERSON;
+//			world->GetMainCamera()->SetState(camState);
+//			break;
+//		case -620:
+//			player->SetSpawnPos({ 0, 10, -620 });
+//			break;
+//		case -840:
+//			player->SetSpawnPos({ 0, 10, -840 });
+//			camState = CameraState::TOPDOWN;
+//			world->GetMainCamera()->SetState(camState);
+//			break;
+//		case -990:
+//			if ((int)player->GetTransform().GetPosition().x == -30 && (int)player->GetTransform().GetPosition().y > 20)
+//				player->SetSpawnPos({ -30, 50, -990 });
+//			else if ((int)player->GetTransform().GetPosition().x >= 120 && (int)player->GetTransform().GetPosition().y > 20) {
+//				camState = CameraState::TOPDOWN;
+//				world->GetMainCamera()->SetState(camState);
+//			}
+//			else {
+//				camState = CameraState::THIRDPERSON;
+//				world->GetMainCamera()->SetState(camState);
+//			}
+//			break;
+//		}
+//	}
+//}
+//
+///* Fires objects across the platform */
+//void TutorialGame::FireObjects() {
+//	SphereObject* sphere = new SphereObject;
+//	rand() % 2 ? projectiles.push_back(AddSphereToWorld(sphere, Vector3(90, 5, ((rand() % (200 - 210 + 1)) + 200) * -1), 3)) :
+//		projectiles.push_back(AddSphereToWorld(sphere, Vector3(90, 5, ((rand() % (250 - 240 + 1)) + 240) * -1), 3));
+//	sphere->GetPhysicsObject()->SetLinearVelocity(Vector3(-150, 0, 0));
+//
+//	switch (rand() % 2) {
+//	case 0:
+//		projectiles.push_back(AddSphereToWorld(new SphereObject, platforms.at(1)->GetTransform().GetPosition() - Vector3(0, 10, 0), 2));
+//		break;
+//	case 1:
+//		CapsuleObject * capsule = new CapsuleObject;
+//		projectiles.push_back(AddCapsuleToWorld(capsule, platforms.at(1)->GetTransform().GetPosition() - Vector3(0, 10, 0), 4, 2));
+//		capsule->GetTransform().SetOrientation(Matrix4::Rotation(90, Vector3(0, 0, 1)));
+//		break;
+//	}
+//}
 
 /* Updates the maze level */
 void TutorialGame::UpdateLevel2(float dt) {
@@ -543,215 +544,97 @@ void TutorialGame::InitWorld() {
 void TutorialGame::InitFloors(int level) {
 	switch (level) {
 	case 0:
-		/* Background object */
-		AddFloorToWorld(new FloorObject, Vector3(0, 50, 0), Vector3(80, 40, 1))->GetRenderObject()->SetDefaultTexture(menuTex);
 		break;
-	case 1:
-		/* Lava */
-		AddFloorToWorld(new LavaObject, Vector3(0, -60, -400), Vector3(500, 1, 1000));
-
-		/* Starting Platform */
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, 50), Vector3(25, 1, 25));
-
-		/* Walls */
-		AddFloorToWorld(new FloorObject, Vector3(-25, 2, 0), Vector3(1, 2, 24));
-		AddFloorToWorld(new FloorObject, Vector3(25, 2, 0), Vector3(1, 2, 24));
-		AddFloorToWorld(new FloorObject, Vector3(-15, 2, 25), Vector3(11, 2, 1));
-		AddFloorToWorld(new FloorObject, Vector3(15, 2, 25), Vector3(11, 2, 1));
-		AddFloorToWorld(new FloorObject, Vector3(-15, 2, -25), Vector3(11, 2, 1));
-		AddFloorToWorld(new FloorObject, Vector3(15, 2, -25), Vector3(11, 2, 1));
-
-		/* First platforms */
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, 0), Vector3(25, 1, 25));
-		AddFloorToWorld(new FloorObject, Vector3(0, 10, -107), Vector3(25, 1, 40), Matrix4::Rotation(15, { 1, 0, 0 }));
-		AddFloorToWorld(new FloorObject, Vector3(0, 20.4, -150.2), Vector3(25, 1, 5));
-		AddFloorToWorld(new IceObject, Vector3(0, 10, -175), Vector3(25, 1, 23), Matrix4::Rotation(-27, { 1, 0, 0 }));
-
-		/* Projectile Wall */
-		AddFloorToWorld(new FloorObject, Vector3(120, 5, -225), Vector3(1, 5, 30));
-
-		/* Sphere rolling floors */
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -205), Vector3(100, 1, 10));
-		AddFloorToWorld(new FloorObject, Vector3(-90, 0, -225), Vector3(10, 1, 10));
-		AddFloorToWorld(new FloorObject, Vector3(90, 0, -225), Vector3(10, 1, 10));
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -245), Vector3(100, 1, 10));
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -265), Vector3(10, 1, 10));
-
-		/* Ice Shortcut */
-		AddFloorToWorld(new IceObject, Vector3(0, 0, -225), Vector3(5, 1, 5));
-
-		/* High elasticity trampoline */
-		AddFloorToWorld(new TrampolineObject, Vector3(0, -30, -315), Vector3(10, 1, 10));
-		AddFloorToWorld(new TrampolineObject, Vector3(0, -30, -395), Vector3(10, 1, 10));
-
-		/* Regular Platform*/
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -445), Vector3(10, 1, 10));
-
-		/* Low Friction Ice */
-		AddFloorToWorld(new IceObject, Vector3(40, 0, -475), Vector3(30, 1, 5), Matrix4::Rotation(30, { 0, 1, 0 }));
-		AddFloorToWorld(new IceObject, Vector3(0, 0, -515), Vector3(5, 1, 60), Matrix4::Rotation(75, { 0, 1, 0 }));
-		AddFloorToWorld(new IceObject, Vector3(-40, 0, -555), Vector3(30, 1, 5), Matrix4::Rotation(150, { 0, -1, 0 }));
-
-		/* Regular Platform */
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -605), Vector3(10, 1, 30));
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -645), Vector3(80, 1, 10));
-		AddFloorToWorld(new FloorObject, Vector3(-90, 0, -735), Vector3(10, 1, 100));
-		AddFloorToWorld(new FloorObject, Vector3(90, 0, -735), Vector3(10, 1, 100));
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -825), Vector3(80, 1, 10));
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -865), Vector3(5, 1, 30));
-		AddFloorToWorld(new FloorObject, Vector3(-25, 0, -900), Vector3(30, 1, 5));
-
-		AddFloorToWorld(new FloorObject, Vector3(-60, 0, -915), Vector3(5, 1, 20));
-		AddFloorToWorld(new FloorObject, Vector3(-60, -20, -1005), Vector3(5, 1, 25));
-		AddFloorToWorld(new FloorObject, Vector3(-59, -20, -1055), Vector3(25, 1, 25));
-		AddFloorToWorld(new FloorObject, Vector3(-59, -18, -1055), Vector3(5, 2, 5));
-
-		/* Patrol Enemy Walls */
-		AddFloorToWorld(new FloorObject, Vector3(-85, -18, -1055), Vector3(1, 3, 25));
-		AddFloorToWorld(new FloorObject, Vector3(-35, -18, -1055), Vector3(1, 3, 25));
-		AddFloorToWorld(new FloorObject, Vector3(-75.5, -18, -1029), Vector3(10.5, 3, 1));
-		AddFloorToWorld(new FloorObject, Vector3(-44.5, -18, -1029), Vector3(10.5, 3, 1));
-		AddFloorToWorld(new FloorObject, Vector3(-60, -18, -1080), Vector3(26, 3, 1));
-
-		/* Spring Walls */
-		AddFloorToWorld(new FloorObject, Vector3(-5, 2, -865.5), Vector3(1, 3, 30.5));
-		AddFloorToWorld(new FloorObject, Vector3(5, 2, -869.5), Vector3(1, 3, 34.5));
-		AddFloorToWorld(new FloorObject, Vector3(-65.5, 2, -915.5), Vector3(1, 3, 20));
-		AddFloorToWorld(new FloorObject, Vector3(-36.25, 2, -895), Vector3(30.25, 3, 1));
-		AddFloorToWorld(new FloorObject, Vector3(-25.25, 2, -905), Vector3(31.25, 3, 1));
-		AddFloorToWorld(new FloorObject, Vector3(-55.5, 2, -920.5), Vector3(1, 3, 14.5));
-
-		/* Springboard Walls */
-		AddFloorToWorld(new FloorObject, Vector3(-71, -30, -955), Vector3(1, 15, 15));
-		AddFloorToWorld(new FloorObject, Vector3(-49, -30, -955), Vector3(1, 15, 15));
-		AddFloorToWorld(new FloorObject, Vector3(-60, -30, -939), Vector3(12, 15, 1));
-		AddFloorToWorld(new FloorObject, Vector3(-60, -46, -954), Vector3(12, 1, 16));
-
-		/* Rotated Platform */
-		AddFloorToWorld(new FloorObject, Vector3(103, 26.5, -990), Vector3(20, 1, 5), Matrix4::Rotation(20, { 0, 0, 1 }));
-		AddFloorToWorld(new FloorObject, Vector3(126.2, 33.3, -995), Vector3(5, 1, 35));
-		AddFloorToWorld(new FloorObject, Vector3(155, 8.5, -1025), Vector3(35, 1, 5), Matrix4::Rotation(45, { 0, 0, -1 }));
-		AddFloorToWorld(new FloorObject, Vector3(155, 8.5, -1010), Vector3(35, 1, 5), Matrix4::Rotation(45, { 0, 0, -1 }));
-		AddFloorToWorld(new FloorObject, Vector3(155, 8.5, -995), Vector3(35, 1, 5), Matrix4::Rotation(45, { 0, 0, -1 }));
-		AddFloorToWorld(new FloorObject, Vector3(155, 8.5, -980), Vector3(35, 1, 5), Matrix4::Rotation(45, { 0, 0, -1 }));
-		AddFloorToWorld(new FloorObject, Vector3(155, 8.5, -965), Vector3(35, 1, 5), Matrix4::Rotation(45, { 0, 0, -1 }));
-
-		/* Finish Platform */
-		AddFloorToWorld(new FinishObject, Vector3(204, -50, -995), Vector3(39, 1, 38));
-		AddFloorToWorld(new FloorObject, Vector3(204, -52, -995), Vector3(41, 1, 40));
-
-		/* Finish Walls */
-		AddFloorToWorld(new FloorObject, Vector3(205, -45, -956), Vector3(40, 6, 1));
-		AddFloorToWorld(new FloorObject, Vector3(205, -45, -1034), Vector3(40, 6, 1));
-		AddFloorToWorld(new FloorObject, Vector3(164, -45, -995), Vector3(1, 6, 40));
-		AddFloorToWorld(new FloorObject, Vector3(244, -45, -995), Vector3(1, 6, 40));
+	case 1:		
 		break;
 	case 2:
-		/* Lava */
-		AddFloorToWorld(new LavaObject, Vector3(0, -60, -500), Vector3(800, 1, 800));
-
-		/* Regular Platform */
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, 10), Vector3(30, 1, 40));
-		AddFloorToWorld(new FloorObject, Vector3(0, 10, 30), Vector3(3, 1, 3))->GetRenderObject()->SetDefaultTexture(wallTex);		// Starting platform
-
-		/* Walls*/
-		AddFloorToWorld(new FloorObject, Vector3(-31, 4, 20), Vector3(1, 5, 31));
-		AddFloorToWorld(new FloorObject, Vector3(31, 4, 20), Vector3(1, 5, 31));
-		AddFloorToWorld(new FloorObject, Vector3(0, 4, 51), Vector3(32, 5, 1));
-
-		/* Maze Floor */
-		AddFloorToWorld(new FloorObject, Vector3(0, 0, -240), Vector3(210, 1, 210));
-		CreateMaze();
-
-		/* Finish Platform */
-		AddFloorToWorld(new FinishObject, Vector3(0, 1, -240), Vector3(10, 1, 10));
 		break;
 	}
 }
 
 /* Places all walls and obstacles that are found in the grid file */
 void TutorialGame::CreateMaze() {
-	NavigationGrid grid("MazePath.txt");
-	Vector3 offset(220, -20, 460), nodePos, objectPos, icePos;
-	float xSize = 10, zSize = 10, iceXSize = 10, iceZsize = 10;
+	//NavigationGrid grid("MazePath.txt");
+	//Vector3 offset(220, -20, 460), nodePos, objectPos, icePos;
+	//float xSize = 10, zSize = 10, iceXSize = 10, iceZsize = 10;
 
-	/* Place all horizontally efficient walls and obstacles */
-	for (int y = 0; y < 23; ++y) {
-		nodePos = grid.GetNodes()[23 * y].position;
-		xSize = 10;
-		iceXSize = 10;
-		for (int x = 0; x < 23; ++x) {
-			objectPos = grid.GetNodes()[(23 * y) + x + 1].position;
+	///* Place all horizontally efficient walls and obstacles */
+	//for (int y = 0; y < 23; ++y) {
+	//	nodePos = grid.GetNodes()[23 * y].position;
+	//	xSize = 10;
+	//	iceXSize = 10;
+	//	for (int x = 0; x < 23; ++x) {
+	//		objectPos = grid.GetNodes()[(23 * y) + x + 1].position;
 
-			/* Place items and obstacles */
-			if (grid.GetNodes()[(23 * y) + x].type == SPRING_NODE)
-				AddCubeToWorld(new SpringObject(objectPos - offset + Vector3(-20, -15, 0), 0.002f), objectPos - offset + Vector3(-20, -15, 0), Vector3(8, 5, 1));
-			if (grid.GetNodes()[(23 * y) + x].type == COIN_NODE)
-				AddPickupToWorld(new CoinObject, objectPos - offset + Vector3(-20, -16, 0));
-			if (grid.GetNodes()[(23 * y) + x].type == POWERUP_NODE)
-				AddPickupToWorld(new PowerupObject, objectPos - offset + Vector3(-20, -16, 0));
+	//		/* Place items and obstacles */
+	//		if (grid.GetNodes()[(23 * y) + x].type == SPRING_NODE)
+	//			AddCubeToWorld(new SpringObject(objectPos - offset + Vector3(-20, -15, 0), 0.002f), objectPos - offset + Vector3(-20, -15, 0), Vector3(8, 5, 1));
+	//		if (grid.GetNodes()[(23 * y) + x].type == COIN_NODE)
+	//			AddPickupToWorld(new CoinObject, objectPos - offset + Vector3(-20, -16, 0));
+	//		if (grid.GetNodes()[(23 * y) + x].type == POWERUP_NODE)
+	//			AddPickupToWorld(new PowerupObject, objectPos - offset + Vector3(-20, -16, 0));
 
-			if (grid.GetNodes()[(23 * y) + x].type == WALL_NODE) {
-				if ((grid.GetNodes()[(23 * y) + x + 1].type != WALL_NODE || x == 22) && xSize > zSize)
-					AddFloorToWorld(new FloorObject, nodePos - offset, { xSize, 20, zSize })->GetRenderObject()->SetDefaultTexture(wallTex);
-				else {
-					nodePos.x += 10;
-					xSize += 10;
-				}
-			}
-			else {
-				xSize = 10;
-				nodePos = grid.GetNodes()[(23 * y) + x + 1].position;
-			}
-			if (grid.GetNodes()[(23 * y) + x].type == ICE_NODE) {
-				if ((grid.GetNodes()[(23 * y) + x + 1].type != ICE_NODE || x == 22) && iceXSize > iceZsize)
-					AddFloorToWorld(new IceObject, icePos - offset - Vector3(0, 19, 0), Vector3(iceXSize, 0.1, iceZsize));
-				else {
-					icePos.x += 10;
-					iceXSize += 10;
-				}
-			}
-			else {
-				iceXSize = 10;
-				icePos = grid.GetNodes()[(23 * y) + x + 1].position;
-			}
-		}
-	}
+	//		if (grid.GetNodes()[(23 * y) + x].type == WALL_NODE) {
+	//			if ((grid.GetNodes()[(23 * y) + x + 1].type != WALL_NODE || x == 22) && xSize > zSize)
+	//				AddFloorToWorld(new FloorObject, nodePos - offset, { xSize, 20, zSize })->GetRenderObject()->SetDefaultTexture(wallTex);
+	//			else {
+	//				nodePos.x += 10;
+	//				xSize += 10;
+	//			}
+	//		}
+	//		else {
+	//			xSize = 10;
+	//			nodePos = grid.GetNodes()[(23 * y) + x + 1].position;
+	//		}
+	//		if (grid.GetNodes()[(23 * y) + x].type == ICE_NODE) {
+	//			if ((grid.GetNodes()[(23 * y) + x + 1].type != ICE_NODE || x == 22) && iceXSize > iceZsize)
+	//				AddFloorToWorld(new IceObject, icePos - offset - Vector3(0, 19, 0), Vector3(iceXSize, 0.1, iceZsize));
+	//			else {
+	//				icePos.x += 10;
+	//				iceXSize += 10;
+	//			}
+	//		}
+	//		else {
+	//			iceXSize = 10;
+	//			icePos = grid.GetNodes()[(23 * y) + x + 1].position;
+	//		}
+	//	}
+	//}
 
-	/* Place all vertically efficient walls and obstacles */
-	xSize = 10;
-	iceXSize = 10;
-	for (int x = 0; x < 23; ++x) {
-		nodePos = grid.GetNodes()[x].position;
-		icePos = grid.GetNodes()[x].position;
-		zSize = 10;
-		for (int y = 0; y < 23; ++y) {
-			if (grid.GetNodes()[(23 * y) + x].type == WALL_NODE) {
-				if ((grid.GetNodes()[(23 * y) + x + 23].type != WALL_NODE || y == 22) && zSize > xSize)
-					AddFloorToWorld(new FloorObject, nodePos - offset, { xSize, 20, zSize })->GetRenderObject()->SetDefaultTexture(wallTex);
-				else {
-					nodePos.z += 10;
-					zSize += 10;
-				}
-			}
-			else {
-				zSize = 10;
-				nodePos = grid.GetNodes()[(23 * y) + x + 23].position;
-			}
-			if (grid.GetNodes()[(23 * y) + x].type == ICE_NODE) {
-				if ((grid.GetNodes()[(23 * y) + x + 23].type != ICE_NODE || y == 22) && iceZsize >= iceXSize)
-					AddFloorToWorld(new IceObject, icePos - offset - Vector3(0, 19, 0), Vector3(iceXSize, 0.1, iceZsize));
-				else {
-					icePos.z += 10;
-					iceZsize += 10;
-				}
-			}
-			else {
-				iceZsize = 10;
-				icePos = grid.GetNodes()[(23 * y) + x + 23].position;
-			}
-		}
-	}
+	///* Place all vertically efficient walls and obstacles */
+	//xSize = 10;
+	//iceXSize = 10;
+	//for (int x = 0; x < 23; ++x) {
+	//	nodePos = grid.GetNodes()[x].position;
+	//	icePos = grid.GetNodes()[x].position;
+	//	zSize = 10;
+	//	for (int y = 0; y < 23; ++y) {
+	//		if (grid.GetNodes()[(23 * y) + x].type == WALL_NODE) {
+	//			if ((grid.GetNodes()[(23 * y) + x + 23].type != WALL_NODE || y == 22) && zSize > xSize)
+	//				AddFloorToWorld(new FloorObject, nodePos - offset, { xSize, 20, zSize })->GetRenderObject()->SetDefaultTexture(wallTex);
+	//			else {
+	//				nodePos.z += 10;
+	//				zSize += 10;
+	//			}
+	//		}
+	//		else {
+	//			zSize = 10;
+	//			nodePos = grid.GetNodes()[(23 * y) + x + 23].position;
+	//		}
+	//		if (grid.GetNodes()[(23 * y) + x].type == ICE_NODE) {
+	//			if ((grid.GetNodes()[(23 * y) + x + 23].type != ICE_NODE || y == 22) && iceZsize >= iceXSize)
+	//				AddFloorToWorld(new IceObject, icePos - offset - Vector3(0, 19, 0), Vector3(iceXSize, 0.1, iceZsize));
+	//			else {
+	//				icePos.z += 10;
+	//				iceZsize += 10;
+	//			}
+	//		}
+	//		else {
+	//			iceZsize = 10;
+	//			icePos = grid.GetNodes()[(23 * y) + x + 23].position;
+	//		}
+	//	}
+	//}
 }
 
 /* Initialises all game objects, enemies etc */
@@ -760,80 +643,10 @@ void TutorialGame::InitGameExamples(int level) {
 		Vector3(-43, -15, -1055), Vector3(-59, -15, -1035) };		// Coordinates for patrol enemy
 	switch (level) {
 	case 0:
-		/* Menu Objects */
-		menuPlayers.push_back(AddPlayerToWorld(new PlayerObject, Vector3(-20, 55, 50)));
-		menuPlayers.push_back(AddPlayerToWorld(new PlayerObject, Vector3(-20, 46, 50)));
-		menuEnemies.push_back(AddEnemyToWorld(new EnemyObject, { -15, 46, 50 }));
-		menuEnemies.push_back(AddEnemyToWorld(new EnemyObject, { -10, 46, 50 }));
-		menuEnemies.push_back(AddEnemyToWorld(new EnemyObject, { -5, 46, 50 }));
-		for (auto& e : menuEnemies) {
-			e->GetRenderObject()->SetColour({ 0.1,0.1,0.1,1 });
-			e->GetTransform().SetOrientation(Matrix4::Rotation(180, Vector3(0, 1, 0)));
-		}
-		for (int i = 0; i < menuPlayers.size(); ++i) {
-			GameObject* o = menuPlayers.at(i);
-			if (i == 1)
-				o->GetRenderObject()->SetColour({ 0.1,0.1,0.1,1 });
-			o->GetTransform().SetOrientation(Matrix4::Rotation(180, Vector3(0, 1, 0)));
-		}
 		break;
 	case 1:
-		/* Player */
-		InitPlayer();
-
-		/* Moving state machine platforms*/
-		platforms.push_back((PlatformStateGameObject*)AddFloorToWorld(
-			new PlatformStateGameObject(Vector3(-12.5, 0, -49), Vector3(12.5, 0, -49)), Vector3(-12.5, 0, -49), { 12.5,1,24 }));
-		platforms.push_back((PlatformStateGameObject*)AddFloorToWorld(
-			new PlatformStateGameObject(Vector3(-12.5, 40, -130), Vector3(12.5, 40, -130)), Vector3(-12.5, 40, -130), { 5,1,5 }));
-		platforms.push_back((PlatformStateGameObject*)AddFloorToWorld(
-			new PlatformStateGameObject(Vector3(-45, -20, -990), Vector3(-45, 20, -990)), Vector3(-45, -20, -990), { 10,1,10 }));
-
-		/* Bonus items */
-		AddPickupToWorld(new PowerupObject, Vector3(0, 3, -20));
-		AddPickupToWorld(new CoinObject, Vector3(-90, 3, -225));
-		AddPickupToWorld(new CoinObject, Vector3(90, 3, -225));
-		AddPickupToWorld(new CoinObject, Vector3(0, 3, -225));
-		AddPickupToWorld(new CoinObject, Vector3(0, 25, -355));
-
-		AddPickupToWorld(new CoinObject, Vector3(40, 3, -475))->GetTransform().SetOrientation(Matrix4::Rotation(-60, { 0, 1, 0 }));
-		AddPickupToWorld(new CoinObject, Vector3(0, 3, -515))->GetTransform().SetOrientation(Matrix4::Rotation(-110, { 0, 1, 0 }));;;
-		AddPickupToWorld(new CoinObject, Vector3(-40, 3, -555))->GetTransform().SetOrientation(Matrix4::Rotation(-60, { 0, 1, 0 }));
-
-		AddPickupToWorld(new CoinObject, Vector3(-90, 3, -645));
-		AddPickupToWorld(new CoinObject, Vector3(90, 3, -645));
-		AddPickupToWorld(new CoinObject, Vector3(-90, 3, -825));
-		AddPickupToWorld(new CoinObject, Vector3(90, 3, -825));
-		AddPickupToWorld(new CoinObject, Vector3(-30, 3, -900))->GetTransform().SetOrientation(Matrix4::Rotation(90, { 0, 1, 0 }));
-		AddPickupToWorld(new CoinObject, Vector3(-60, 3, -915));
-		AddPickupToWorld(new PowerupObject, Vector3(-59, -13, -1055));
-		AddPickupToWorld(new CoinObject, Vector3(-61, -13, -1057));
-		AddPickupToWorld(new CoinObject, Vector3(-61, -13, -1053));
-		AddPickupToWorld(new CoinObject, Vector3(-57, -13, -1053));
-		AddPickupToWorld(new CoinObject, Vector3(-57, -13, -1057));
-
-		AddPickupToWorld(new CoinObject, Vector3(-60, -14, -990));
-		AddPickupToWorld(new CoinObject, Vector3(20, 20, -990))->GetTransform().SetOrientation(Matrix4::Rotation(270, { 0, 1, 0 }));
-
-		/* Patrol enemy state machine */
-		enemies.push_back((PatrolEnemyStateGameObject*)AddEnemyToWorld(new PatrolEnemyStateGameObject(positions), positions[0]));
-
-		/* Behaviour tree enemy*/
-		behaviourEnemies.push_back((BehaviourTreeEnemy*)AddEnemyToWorld(new BehaviourTreeEnemy(Vector3(0, 4, 0)), Vector3(0, 4, 0)));
 		break;
 	case 2:
-		/* Player */
-		InitPlayer();
-
-		/* Pathfinding enemy state machien; one will not take costs into account, the others will, both using A* */
-		int numEnemies = currentlySelected - 2;
-		if (numEnemies >= 1)
-			enemies.push_back((PathFindingEnemyStateGameObject*)AddEnemyToWorld(new PathFindingEnemyStateGameObject(true), Vector3(-5, 10, 0)));
-		if (numEnemies >= 2)
-			enemies.push_back((PathFindingEnemyStateGameObject*)AddEnemyToWorld(new PathFindingEnemyStateGameObject(false), Vector3(0, 10, 0)));
-		if (numEnemies == 3)
-			enemies.push_back((PathFindingEnemyStateGameObject*)AddEnemyToWorld(new PathFindingEnemyStateGameObject(false), Vector3(5, 10, 0)));
-
 		break;
 	}
 }
@@ -854,153 +667,73 @@ void TutorialGame::InitPlayer() {
 void TutorialGame::InitGameObstacles(int level) {
 	switch (level) {
 	case 1:
-		/* Spinning Bar */
-		/* Spinning Bar */
-		AddCubeToWorld(new RotatingCubeObject, Vector3(0, 3, -735), Vector3(1, 1, 100));
-
-		/* Spring Platforms*/
-		AddCubeToWorld(new SpringObject(Vector3(0, 5, -890), 0.005f), Vector3(0, 5, -890), Vector3(4, 4, 1));
-		AddCubeToWorld(new SpringObject(Vector3(-50, 5, -900), 0.005f), Vector3(-50, 5, -900), Vector3(1, 4, 4));
-		AddCubeToWorld(new SpringObject(Vector3(-60, -15, -955), 0.01f), Vector3(-60, -15, -955), Vector3(10, 1, 15));
-
-		/* Bridge */
-		AddBridgeToWorld(Vector3(-30, 20, -990));
 		break;
 	}
 }
 
-/* Initialises a world with a number of sphere objects */
-void TutorialGame::InitSphereGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, float radius) {
-	for (int x = 0; x < numCols; ++x) {
-		for (int z = 0; z < numRows; ++z) {
-			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
-			AddSphereToWorld(new SphereObject, position, radius);
-		}
-	}
-}
-
-/* Initialises a world with a number of cube objects */
-void TutorialGame::InitCubeGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing, const Vector3& cubeDims) {
-	for (int x = 0; x < numCols; ++x) {
-		for (int z = 0; z < numRows; ++z) {
-			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
-			AddCubeToWorld(new CubeObject, position, cubeDims);
-		}
-	}
-}
-
-/* Initialises a world with a number of random objects */
-void TutorialGame::InitMixedGridWorld(int numRows, int numCols, float rowSpacing, float colSpacing) {
-	float sphereRadius = 1.0f;
-	Vector3 cubeDims = Vector3(1, 1, 1);
-	for (int x = 0; x < numCols; ++x) {
-		for (int z = 0; z < numRows; ++z) {
-			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
-			int type = rand() % 3;
-			switch (type) {
-			case 0:
-				(rand() % 2) ? AddCubeToWorld(new CubeObject, position, cubeDims * Vector3(1, 4, 1)) : AddCubeToWorld(new CubeObject, position, cubeDims);
-				break;
-			case 1:
-				(rand() % 2) ? AddSphereToWorld(new SphereObject, position, sphereRadius / 2) : AddSphereToWorld(new SphereObject, position, sphereRadius);
-				break;
-			case 2:
-				(rand() % 2) ? AddCapsuleToWorld(new CapsuleObject, position, 3.0f, sphereRadius * 1.5) : AddCapsuleToWorld(new CapsuleObject, position, 2.0f, sphereRadius);
-				break;
-			}
-		}
-	}
-}
-
-/* Adds a large immoveable cube to the world */
-GameObject* TutorialGame::AddFloorToWorld(GameObject* floor, const Vector3& position, const Vector3& size, const Matrix4& orientation) {
-	/* Checking if oriented (need OBB) */
-	if (Vector3(1, 1, 1) != orientation * Vector3(1, 1, 1)) {
-		OBBVolume* volume = new OBBVolume(size);
-		floor->SetBoundingVolume((CollisionVolume*)volume);
-	}
-	else {
-		AABBVolume* volume = new AABBVolume(size);
-		floor->SetBoundingVolume((CollisionVolume*)volume);
-	}
-
-	floor->GetTransform().SetScale(size * 2).SetPosition(position).SetOrientation(orientation);
-	floor->SetRenderObject(new RenderObject(&floor->GetTransform(), cubeMesh, floorTex, basicShader));
-
-	if (dynamic_cast<LavaObject*>(floor))
-		floor->GetRenderObject()->SetDefaultTexture(lavaTex);
-	else if (dynamic_cast<IceObject*>(floor))
-		floor->GetRenderObject()->SetDefaultTexture(iceTex);
-	else if (dynamic_cast<TrampolineObject*>(floor))
-		floor->GetRenderObject()->SetDefaultTexture(trampolineTex);
-	else if (dynamic_cast<FinishObject*>(floor))
-		floor->GetRenderObject()->SetDefaultTexture(finishTex);
-
-	floor->SetPhysicsObject(new PhysicsObject(&floor->GetTransform(), floor->GetBoundingVolume()));
-	floor->GetPhysicsObject()->InitCubeInertia();
-	world->AddGameObject(floor);
-	return floor;
-}
-
-/* Builds a sphere object, both mesh and collision volume */
-GameObject* TutorialGame::AddSphereToWorld(GameObject* sphere, const Vector3& position, float radius) {
-	Vector3 sphereSize = Vector3(radius, radius, radius);
-	SphereVolume* volume = new SphereVolume(radius);
-	sphere->SetBoundingVolume((CollisionVolume*)volume);
-	sphere->GetTransform().SetScale(sphereSize).SetPosition(position);
-	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(), sphereMesh, obstacleTex, basicShader));
-	sphere->SetPhysicsObject(new PhysicsObject(&sphere->GetTransform(), sphere->GetBoundingVolume()));
-	sphere->GetPhysicsObject()->InitSphereInertia(false);
-	world->AddGameObject(sphere);
-	return sphere;
-}
-
-/* Builds a cube object, depending on object type collision volume will be either AABB or OBB */
-GameObject* TutorialGame::AddCubeToWorld(GameObject* cube, const Vector3& position, Vector3 dimensions) {
+GameObject* TutorialGame::AddPxCubeToWorld(GameObject* cube, PxRigidActor* body, const Vector3& position, Vector3 dimensions) {
 	CollisionVolume* volume;
 	dynamic_cast<RotatingCubeObject*>(cube) ? volume = new OBBVolume(dimensions) : volume = new AABBVolume(dimensions);
 	cube->SetBoundingVolume((CollisionVolume*)volume);
 	cube->GetTransform().SetPosition(position).SetScale(dimensions * 2);
 	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), cubeMesh, obstacleTex, basicShader));
-	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
-	cube->GetPhysicsObject()->InitCubeInertia();
-	world->AddGameObject(cube);
+	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), body, cube->GetBoundingVolume()));
+	world->AddGameObject(cube);	
 	return cube;
 }
 
-/* Builds a capsule object, both mesh and collision volume */
-GameObject* TutorialGame::AddCapsuleToWorld(GameObject* capsule, const Vector3& position, float halfHeight, float radius) {
+GameObject* TutorialGame::AddPxSphereToWorld(GameObject* sphere, PxRigidActor* body, const Vector3& position, float radius) {
+	SphereVolume* volume = new SphereVolume(radius);
+	sphere->SetBoundingVolume((CollisionVolume*)volume);
+	sphere->GetTransform().SetPosition(position).SetScale(Vector3(radius, radius, radius) * 2);
+	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(), sphereMesh, obstacleTex, basicShader));
+	sphere->SetPhysicsObject(new PhysicsObject(&sphere->GetTransform(), body, sphere->GetBoundingVolume()));
+	world->AddGameObject(sphere);
+	return sphere;
+}
+
+GameObject* TutorialGame::AddPxCapsuleToWorld(GameObject* capsule, PxRigidActor* body, const Vector3& position, float radius, float halfHeight) {
 	CapsuleVolume* volume = new CapsuleVolume(halfHeight, radius);
 	capsule->SetBoundingVolume((CollisionVolume*)volume);
 	capsule->GetTransform().SetScale(Vector3(radius * 2, halfHeight, radius * 2)).SetPosition(position);
-	capsule->SetRenderObject(new RenderObject(&capsule->GetTransform(), capsuleMesh, obstacleTex, basicShader));
-	capsule->SetPhysicsObject(new PhysicsObject(&capsule->GetTransform(), capsule->GetBoundingVolume()));
-	capsule->GetPhysicsObject()->InitCapsuleInertia();
+	capsule->SetRenderObject(new RenderObject(&capsule->GetTransform(), capsuleMesh, basicTex, basicShader));
+	capsule->SetPhysicsObject(new PhysicsObject(&capsule->GetTransform(), body, capsule->GetBoundingVolume()));
 	world->AddGameObject(capsule);
 	return capsule;
 }
 
+GameObject* TutorialGame::AddPxFloorToWorld(GameObject* cube, PxRigidStatic* body, const Vector3& position, Vector3 dimensions) {
+	CollisionVolume* volume;
+	dynamic_cast<RotatingCubeObject*>(cube) ? volume = new OBBVolume(dimensions) : volume = new AABBVolume(dimensions);
+	cube->SetBoundingVolume((CollisionVolume*)volume);
+	cube->GetTransform().SetPosition(position).SetScale(dimensions * 2);
+	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), cubeMesh, obstacleTex, basicShader));
+	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), body, cube->GetBoundingVolume()));
+	world->AddGameObject(cube);
+	return cube;
+}
+
 /* Adds a bridge to our world, held by constraints */
 void TutorialGame::AddBridgeToWorld(Vector3 startPos) {
-	Vector3 cubeSize(2.5, 0.5, 5);
-	Vector3 baseSize(4, 1, 5);
-	float bridgeWidth = 110;
-	float invCubeMass = 5; // how heavy the middle pieces are
-	int numLinks = 15;
-	float maxDistance = (bridgeWidth / (numLinks + 2)); // constraint distance
-	float cubeDistance = (bridgeWidth / (numLinks + 2)); // distance between links
-	GameObject* start = AddFloorToWorld(new FloorObject, startPos + Vector3(0, 0, 0), baseSize);
-	GameObject* end = AddFloorToWorld(new FloorObject, startPos + Vector3((numLinks + 2) * cubeDistance, 0, 0), baseSize);
-	GameObject* previous = start;
-	for (int i = 0; i < numLinks; ++i) {
-		GameObject* block = AddCubeToWorld(new CubeObject, startPos + Vector3((i + 1) * cubeDistance, 0, 0), cubeSize);
-		block->GetRenderObject()->SetDefaultTexture(woodenTex);
-		PositionConstraint* constraint = new PositionConstraint(previous, block, maxDistance);
-		world->AddConstraint(constraint);
-		previous = block;
-	}
-	PositionConstraint* constraint = new PositionConstraint(previous, end, maxDistance);
-	world->AddConstraint(constraint);
+	//Vector3 cubeSize(2.5, 0.5, 5);
+	//Vector3 baseSize(4, 1, 5);
+	//float bridgeWidth = 110;
+	//float invCubeMass = 5; // how heavy the middle pieces are
+	//int numLinks = 15;
+	//float maxDistance = (bridgeWidth / (numLinks + 2)); // constraint distance
+	//float cubeDistance = (bridgeWidth / (numLinks + 2)); // distance between links
+	//GameObject* start = AddFloorToWorld(new FloorObject, startPos + Vector3(0, 0, 0), baseSize);
+	//GameObject* end = AddFloorToWorld(new FloorObject, startPos + Vector3((numLinks + 2) * cubeDistance, 0, 0), baseSize);
+	//GameObject* previous = start;
+	//for (int i = 0; i < numLinks; ++i) {
+	//	GameObject* block = AddCubeToWorld(new CubeObject, startPos + Vector3((i + 1) * cubeDistance, 0, 0), cubeSize);
+	//	block->GetRenderObject()->SetDefaultTexture(woodenTex);
+	//	PositionConstraint* constraint = new PositionConstraint(previous, block, maxDistance);
+	//	world->AddConstraint(constraint);
+	//	previous = block;
+	//}
+	//PositionConstraint* constraint = new PositionConstraint(previous, end, maxDistance);
+	//world->AddConstraint(constraint);
 }
 
 /* Add our player character with a capsule collision volume */

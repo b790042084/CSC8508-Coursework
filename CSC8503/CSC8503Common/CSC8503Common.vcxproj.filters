@@ -166,9 +166,6 @@
     <ClInclude Include="BehaviourTreeEnemy.h">
       <Filter>AI\Behaviour Trees</Filter>
     </ClInclude>
-    <ClInclude Include="IntroScreen.h">
-      <Filter>AI\Pushdown Automata</Filter>
-    </ClInclude>
     <ClInclude Include="PauseScreen.h">
       <Filter>AI\Pushdown Automata</Filter>
     </ClInclude>
