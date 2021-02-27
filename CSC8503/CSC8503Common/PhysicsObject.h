@@ -23,7 +23,6 @@ namespace NCL {
 
 		class PhysicsObject {
 		public:
-			PhysicsObject(Transform* parentTransform, const CollisionVolume* parentVolume);
 			PhysicsObject(Transform* parentTransform, PxRigidActor* pxTrans, const CollisionVolume* parentVolume);
 			~PhysicsObject();
 

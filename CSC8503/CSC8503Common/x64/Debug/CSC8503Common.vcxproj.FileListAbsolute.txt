@@ -1,0 +1,2 @@
+C:\Users\sambu\source\repos\CSC8508\x64\Debug\CSC8503Common.pdb
+C:\Users\sambu\Source\Repos\CSC8508\CSC8503\CSC8503Common\x64\Debug\CSC8503Common.pdb

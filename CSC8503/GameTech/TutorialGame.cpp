@@ -639,8 +639,6 @@ void TutorialGame::CreateMaze() {
 
 /* Initialises all game objects, enemies etc */
 void TutorialGame::InitGameExamples(int level) {
-	vector<Vector3> positions = { Vector3(-59, -15, -1035), Vector3(-75, -15, -1055),  Vector3(-59, -15, -1075),
-		Vector3(-43, -15, -1055), Vector3(-59, -15, -1035) };		// Coordinates for patrol enemy
 	switch (level) {
 	case 0:
 		break;
@@ -653,14 +651,14 @@ void TutorialGame::InitGameExamples(int level) {
 
 /* Sets the locked and selected object to the player and enter third person mode */
 void TutorialGame::InitPlayer() {
-	Vector3 position = currentLevel == 1 ? Vector3(0, 10, 50) : Vector3(0, 15, 30);
+	/*Vector3 position = currentLevel == 1 ? Vector3(0, 10, 50) : Vector3(0, 15, 30);
 	player = (PlayerObject*)AddPlayerToWorld(new PlayerObject, position);
 	lockedObject = player;
 	selectionObject = player;
 	selectionObject->SetSelected(true);
 	camState = CameraState::THIRDPERSON;
 	world->GetMainCamera()->SetState(camState);
-	world->GetMainCamera()->SetPosition(player->GetTransform().GetPosition());
+	world->GetMainCamera()->SetPosition(player->GetTransform().GetPosition());*/
 }
 
 /* This method will initialise any other moveable obstacles we want */
@@ -675,7 +673,7 @@ GameObject* TutorialGame::AddPxCubeToWorld(GameObject* cube, PxRigidActor* body,
 	CollisionVolume* volume;
 	dynamic_cast<RotatingCubeObject*>(cube) ? volume = new OBBVolume(dimensions) : volume = new AABBVolume(dimensions);
 	cube->SetBoundingVolume((CollisionVolume*)volume);
-	cube->GetTransform().SetPosition(position).SetScale(dimensions * 2);
+	cube->GetTransform().SetScale(dimensions * 2);
 	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), cubeMesh, obstacleTex, basicShader));
 	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), body, cube->GetBoundingVolume()));
 	world->AddGameObject(cube);	
@@ -685,7 +683,7 @@ GameObject* TutorialGame::AddPxCubeToWorld(GameObject* cube, PxRigidActor* body,
 GameObject* TutorialGame::AddPxSphereToWorld(GameObject* sphere, PxRigidActor* body, const Vector3& position, float radius) {
 	SphereVolume* volume = new SphereVolume(radius);
 	sphere->SetBoundingVolume((CollisionVolume*)volume);
-	sphere->GetTransform().SetPosition(position).SetScale(Vector3(radius, radius, radius) * 2);
+	sphere->GetTransform().SetScale(Vector3(radius, radius, radius));
 	sphere->SetRenderObject(new RenderObject(&sphere->GetTransform(), sphereMesh, obstacleTex, basicShader));
 	sphere->SetPhysicsObject(new PhysicsObject(&sphere->GetTransform(), body, sphere->GetBoundingVolume()));
 	world->AddGameObject(sphere);
@@ -695,7 +693,7 @@ GameObject* TutorialGame::AddPxSphereToWorld(GameObject* sphere, PxRigidActor* b
 GameObject* TutorialGame::AddPxCapsuleToWorld(GameObject* capsule, PxRigidActor* body, const Vector3& position, float radius, float halfHeight) {
 	CapsuleVolume* volume = new CapsuleVolume(halfHeight, radius);
 	capsule->SetBoundingVolume((CollisionVolume*)volume);
-	capsule->GetTransform().SetScale(Vector3(radius * 2, halfHeight, radius * 2)).SetPosition(position);
+	capsule->GetTransform().SetScale(Vector3(radius, halfHeight, radius));
 	capsule->SetRenderObject(new RenderObject(&capsule->GetTransform(), capsuleMesh, basicTex, basicShader));
 	capsule->SetPhysicsObject(new PhysicsObject(&capsule->GetTransform(), body, capsule->GetBoundingVolume()));
 	world->AddGameObject(capsule);
@@ -711,6 +709,43 @@ GameObject* TutorialGame::AddPxFloorToWorld(GameObject* cube, PxRigidStatic* bod
 	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), body, cube->GetBoundingVolume()));
 	world->AddGameObject(cube);
 	return cube;
+}
+
+GameObject* TutorialGame::AddPxPickupToWorld(GameObject* p, PxRigidStatic* body, const Vector3& position, float radius) {
+	SphereVolume* volume = new SphereVolume(radius);
+	p->SetBoundingVolume((CollisionVolume*)volume);
+	p->GetTransform().SetScale(Vector3(radius, radius, radius));
+	p->SetRenderObject(new RenderObject(&p->GetTransform(), bonusMesh, basicTex, basicShader));
+	dynamic_cast<PowerupObject*>(p) ? p->GetRenderObject()->SetColour(Debug::MAGENTA) : p->GetRenderObject()->SetColour(Debug::YELLOW);
+	p->SetPhysicsObject(new PhysicsObject(&p->GetTransform(), body, p->GetBoundingVolume()));
+	p->GetPhysicsObject()->InitSphereInertia(false);
+	world->AddGameObject(p);
+	return p;
+}
+
+GameObject* TutorialGame::AddPxPlayerToWorld(GameObject* p, PxRigidActor* body, const Vector3& position, float scale) {
+	float meshSize = 3.0f * scale;
+	CapsuleVolume* volume = new CapsuleVolume(meshSize * 0.85, meshSize * 0.66);
+	p->SetBoundingVolume((CollisionVolume*)volume);
+	p->GetTransform().SetScale(Vector3(meshSize, meshSize * 0.85, meshSize));
+	(rand() % 2) ? p->SetRenderObject(new RenderObject(&p->GetTransform(), charMeshA, plainTex, basicShader)) :
+		p->SetRenderObject(new RenderObject(&p->GetTransform(), charMeshB, plainTex, basicShader));
+	p->GetRenderObject()->SetColour(Vector4(0, 0.5, 1, 1));
+	p->SetPhysicsObject(new PhysicsObject(&p->GetTransform(), body, p->GetBoundingVolume()));
+	world->AddGameObject(p);
+	return p;
+}
+
+GameObject* TutorialGame::AddPxEnemyToWorld(GameObject* e, PxRigidActor* body, const Vector3& position, float scale) {
+	float meshSize = 3.0f * scale;
+	CapsuleVolume* volume = new CapsuleVolume(meshSize * 0.85, meshSize * 0.66);
+	e->SetBoundingVolume((CollisionVolume*)volume);
+	e->GetTransform().SetScale(Vector3(meshSize, meshSize * 0.85, meshSize));
+	e->SetRenderObject(new RenderObject(&e->GetTransform(), enemyMesh, plainTex, basicShader));
+	e->GetRenderObject()->SetColour(Vector4(1, 0, 0, 1));
+	e->SetPhysicsObject(new PhysicsObject(&e->GetTransform(), body, e->GetBoundingVolume()));
+	world->AddGameObject(e);
+	return e;
 }
 
 /* Adds a bridge to our world, held by constraints */
@@ -734,48 +769,6 @@ void TutorialGame::AddBridgeToWorld(Vector3 startPos) {
 	//}
 	//PositionConstraint* constraint = new PositionConstraint(previous, end, maxDistance);
 	//world->AddConstraint(constraint);
-}
-
-/* Add our player character with a capsule collision volume */
-GameObject* TutorialGame::AddPlayerToWorld(GameObject* p, const Vector3& position) {
-	float meshSize = 3.0f;
-	CapsuleVolume* volume = new CapsuleVolume(meshSize * 0.85, 2.0f);
-	p->SetBoundingVolume((CollisionVolume*)volume);
-	p->GetTransform().SetScale(Vector3(meshSize, meshSize, meshSize)).SetPosition(position);
-	(rand() % 2) ? p->SetRenderObject(new RenderObject(&p->GetTransform(), charMeshA, plainTex, basicShader)) :
-		p->SetRenderObject(new RenderObject(&p->GetTransform(), charMeshB, plainTex, basicShader));
-	p->GetRenderObject()->SetColour(Vector4(0, 0.5, 1, 1));
-	p->SetPhysicsObject(new PhysicsObject(&p->GetTransform(), p->GetBoundingVolume()));
-	p->GetPhysicsObject()->InitCapsuleInertia();
-	world->AddGameObject(p);
-	return p;
-}
-
-/* Add an enemy character with a capsule collision volume */
-GameObject* TutorialGame::AddEnemyToWorld(GameObject* e, const Vector3& position) {
-	float meshSize = 3.0f;
-	CapsuleVolume* volume = new CapsuleVolume(meshSize * 0.85, 2.0f);
-	e->SetBoundingVolume((CollisionVolume*)volume);
-	e->GetTransform().SetScale(Vector3(meshSize, meshSize, meshSize)).SetPosition(position);
-	e->SetRenderObject(new RenderObject(&e->GetTransform(), enemyMesh, plainTex, basicShader));
-	e->GetRenderObject()->SetColour(Vector4(1, 0, 0, 1));
-	e->SetPhysicsObject(new PhysicsObject(&e->GetTransform(), e->GetBoundingVolume()));
-	e->GetPhysicsObject()->InitCapsuleInertia();
-	world->AddGameObject(e);
-	return e;
-}
-
-/* Add a pickup item, either a coin or a boost, with a sphere collision volume */
-GameObject* TutorialGame::AddPickupToWorld(GameObject* p, const Vector3& position) {
-	SphereVolume* volume = new SphereVolume(1.25f);
-	p->SetBoundingVolume((CollisionVolume*)volume);
-	p->GetTransform().SetScale(Vector3(0.25, 0.25, 0.25)).SetPosition(position);
-	p->SetRenderObject(new RenderObject(&p->GetTransform(), bonusMesh, basicTex, basicShader));
-	dynamic_cast<PowerupObject*>(p) ? p->GetRenderObject()->SetColour(Debug::MAGENTA) : p->GetRenderObject()->SetColour(Debug::YELLOW);
-	p->SetPhysicsObject(new PhysicsObject(&p->GetTransform(), p->GetBoundingVolume()));
-	p->GetPhysicsObject()->InitSphereInertia(false);
-	world->AddGameObject(p);
-	return p;
 }
 
 /* If in debug mode we can select an object with the cursor, displaying its properties and allowing us to take control */

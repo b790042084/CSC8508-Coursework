@@ -64,37 +64,12 @@ TutorialGame* tutorialGame;
 void AddCubeToWorld(const PxTransform& t, PxVec3 fullExtents);
 void AddSphereToWorld(const PxTransform& t, PxReal radius);
 void AddCapsuleToWorld(const PxTransform& t, PxReal radius, PxReal halfHeight);
+void AddPickupToWorld(const PxTransform& t, PxReal radius);
+void AddPlayerToWorld(const PxTransform& t, float scale);
+void AddEnemyToWorld(const PxTransform& t, float scale);
 void AddFloorToWorld(const PxTransform& t, PxVec3 fullExtents);
 
-PxRigidDynamic* createDynamic(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity = PxVec3(0))
-{
-	;	PxRigidDynamic* dynamic = PxCreateDynamic(*gPhysics, t, geometry, *gMaterial, 10.0f);
-	dynamic->setAngularDamping(0.5f);
-	dynamic->setLinearVelocity(velocity);
-	gScene->addActor(*dynamic);
-	return dynamic;
-}
-
-//void createStack(const PxTransform& t, PxU32 size, PxReal halfExtent)
-//{
-//	
-//	PxShape* shape = gPhysics->createShape(PxBoxGeometry(halfExtent, halfExtent, halfExtent), *gMaterial);
-//	for (PxU32 i = 0; i < size; i++)
-//	{
-//		for (PxU32 j = 0; j < size - i; j++)
-//		{
-//			PxTransform localTm(PxVec3(PxReal(j * 2) - PxReal(size - i), PxReal(i * 2 + 1), 0) * halfExtent);
-//			PxRigidDynamic* body = gPhysics->createRigidDynamic(t.transform(localTm));
-//			body->attachShape(*shape);
-//			PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
-//			gScene->addActor(*body);
-//		}
-//	}
-//	shape->release();
-//}
-
-void initPhysics(bool interactive)
-{
+void initPhysics() {
 	gFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gAllocator, gErrorCallback);
 
 	gPvd = PxCreatePvd(*gFoundation);
@@ -111,38 +86,28 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	PxPvdSceneClient* pvdClient = gScene->getScenePvdClient();
-	if (pvdClient)
-	{
+	if (pvdClient) {
 		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
 		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
 		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
 	}
+
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
-
-	//PxRigidStatic* groundPlane = PxCreatePlane(*gPhysics, PxPlane(0, 1, 0, 0), *gMaterial);
-	//gScene->addActor(*groundPlane);
-
-	/*for (PxU32 i = 0; i < 5; i++)
-		createStack(PxTransform(PxVec3(0, 0, stackZ -= 10.0f)), 10, 2.0f);
-
-	if (!interactive)
-		createDynamic(PxTransform(PxVec3(0, 40, 100)), PxSphereGeometry(10), PxVec3(0, -50, -100));*/
 }
-void stepPhysics(bool /*interactive*/)
-{
-	gScene->simulate(1.0f / 60.0f);
+
+void stepPhysics(float dt) {
+	gScene->simulate(dt);
 	gScene->fetchResults(true);
 }
 
-void cleanupPhysics(bool /*interactive*/)
-{
+void cleanupPhysics(bool /*interactive*/) {
 	/*PX_RELEASE(gScene);
 	PX_RELEASE(gDispatcher);
 	PX_RELEASE(gPhysics);*/
-	if (gPvd)
-	{
+	if (gPvd) {
 		PxPvdTransport* transport = gPvd->getTransport();
-		gPvd->release();	gPvd = NULL;
+		gPvd->release();	
+		gPvd = NULL;
 		//PX_RELEASE(transport);
 	}
 	//PX_RELEASE(gFoundation);
@@ -150,32 +115,26 @@ void cleanupPhysics(bool /*interactive*/)
 	printf("SnippetHelloWorld done.\n");
 }
 
-//void keyPress(unsigned char key, const PxTransform& camera)
-//{
-//	switch (toupper(key))
-//	{
-//	case 'B':	createStack(PxTransform(PxVec3(0, 0, stackZ -= 10.0f)), 10, 2.0f);						break;
-//	case ' ':	createDynamic(camera, PxSphereGeometry(3.0f), camera.rotate(PxVec3(0, 0, -1)) * 200);	break;
-//	}
-//}
-
-int snippetMain(int flag, const char* const*,TutorialGame* t )
-{
+int snippetMain(int flag, const char* const*,TutorialGame* t, float dt ) {
 #ifdef RENDER_SNIPPET
 	extern void renderLoop();
 	renderLoop();
 #else
 	static const PxU32 frameCount = 100;
-	if (flag)
-	{
+	if (flag) {
 		tutorialGame = t;
-		initPhysics(false);
-		AddCubeToWorld(PxTransform(PxVec3(0, 100,0)), PxVec3(10.0f, 5, 20));
-		AddSphereToWorld(PxTransform(PxVec3(-20, 100, 0)), 10);
-		AddCapsuleToWorld(PxTransform(PxVec3(40, 1000, 0)), 5.0f, 10.0f);
+		initPhysics();
+		AddSphereToWorld(PxTransform(PxVec3(-20, 50, -50)), 5);
+		AddCubeToWorld(PxTransform(PxVec3(0, 50, -50)), PxVec3(10, 10, 10));
+		AddCapsuleToWorld(PxTransform(PxVec3(20, 50, -50)), 5.0f, 10.0f);
 		AddFloorToWorld(PxTransform(PxVec3(0, -20, 0)), PxVec3(1000.0f, 1, 1000));
+
+		AddPickupToWorld(PxTransform(PxVec3(-20, 50, 0)), 3);
+		AddPlayerToWorld(PxTransform(PxVec3(0, 50, 0)), 5);
+		AddEnemyToWorld(PxTransform(PxVec3(20, 50, 0)), 5);
+
 	}
-	stepPhysics(false);
+	stepPhysics(dt);
 	//cleanupPhysics(false);
 #endif
 
@@ -186,12 +145,12 @@ void AddCubeToWorld(const PxTransform& t, PxVec3 fullExtents) {
 	GameObject* cube;
 	PxRigidDynamic* body;
 	PxShape* shape = gPhysics->createShape(PxBoxGeometry(fullExtents.x / 2, fullExtents.y / 2, fullExtents.z / 2), *gMaterial);
-	PxTransform localTm(PxVec3(t.p.x * fullExtents.x / 2, t.p.y * fullExtents.y / 2, t.p.z * fullExtents.z / 2));
+	PxTransform localTm(t.p);
 	body = gPhysics->createRigidDynamic(t.transform(localTm));
 	body->attachShape(*shape);
-	
+	body->setAngularVelocity(PxVec3(0.f, 0.f, 10.f));
+
 	PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
-	body->setAngularVelocity(PxVec3(0.f, 0.f, 50.f));
 	gScene->addActor(*body);
 	cube = tutorialGame->AddPxCubeToWorld(new GameObject(), body, Vector3(t.p.x, t.p.y, t.p.z), Vector3(fullExtents.x / 2, fullExtents.y / 2, fullExtents.z / 2));
 }
@@ -200,12 +159,12 @@ void AddSphereToWorld(const PxTransform& t, PxReal radius) {
 	GameObject* sphere;
 	PxRigidDynamic* body;
 	PxShape* shape = gPhysics->createShape(PxSphereGeometry(radius), *gMaterial);
-	PxTransform localTm(t.p * radius);
+	PxTransform localTm(t.p);
 	body = gPhysics->createRigidDynamic(t.transform(localTm));
 	body->attachShape(*shape);
+	body->setAngularVelocity(PxVec3(0.f, 0.f, 10.f));
 
 	PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
-	body->setAngularVelocity(PxVec3(0.f, 0.f, 50.f));
 	gScene->addActor(*body);
 	sphere = tutorialGame->AddPxSphereToWorld(new GameObject(), body, Vector3(t.p.x, t.p.y, t.p.z), radius);
 }
@@ -214,26 +173,64 @@ void AddCapsuleToWorld(const PxTransform& t, PxReal radius, PxReal halfHeight) {
 	GameObject* sphere;
 	PxRigidDynamic* body;
 	PxShape* shape = gPhysics->createShape(PxCapsuleGeometry(radius, halfHeight), *gMaterial);
-	PxTransform localTm(PxQuat(PxHalfPi, PxVec3(0, 0, 1)));
+	PxTransform localTm(t.p);
 	body = gPhysics->createRigidDynamic(t.transform(localTm));
 	body->attachShape(*shape);
+	body->setAngularVelocity(PxVec3(0.f, 0.f, 10.f));
 
 	PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
-	body->setAngularVelocity(PxVec3(0.f, 0.f, 50.f));
 	gScene->addActor(*body);
 	sphere = tutorialGame->AddPxCapsuleToWorld(new GameObject(), body, Vector3(t.p.x, t.p.y, t.p.z), radius, halfHeight);
 }
 
-void AddFloorToWorld(const PxTransform& t, PxVec3 fullExtents)
-{
+void AddFloorToWorld(const PxTransform& t, PxVec3 fullExtents) {
 	GameObject* floor;
 	PxRigidStatic* body;
 	PxShape* shape = gPhysics->createShape(PxBoxGeometry(fullExtents.x / 2, fullExtents.y / 2, fullExtents.z / 2), *gMaterial);
-	PxTransform localTm(PxVec3(t.p.x * fullExtents.x / 2, t.p.y * fullExtents.y / 2, t.p.z * fullExtents.z / 2));
+	PxTransform localTm(t.p);
 	body = gPhysics->createRigidStatic(t.transform(localTm));
 	body->attachShape(*shape);
 
 	gScene->addActor(*body);
-
 	floor = tutorialGame->AddPxFloorToWorld(new GameObject(), body, Vector3(t.p.x, t.p.y, t.p.z), Vector3(fullExtents.x / 2, fullExtents.y / 2, fullExtents.z / 2));
+}
+
+void AddPickupToWorld(const PxTransform& t, PxReal radius) {
+	GameObject* sphere;
+	PxRigidStatic* body;
+	PxShape* shape = gPhysics->createShape(PxSphereGeometry(radius), *gMaterial);
+	PxTransform localTm(t.p);
+	body = gPhysics->createRigidStatic(t.transform(localTm));
+	body->attachShape(*shape);
+
+	gScene->addActor(*body);
+	sphere = tutorialGame->AddPxPickupToWorld(new GameObject(), body, Vector3(t.p.x, t.p.y, t.p.z), radius);
+}
+
+void AddPlayerToWorld(const PxTransform& t, float scale) {
+	float meshSize = 3.0f * scale;
+	GameObject* sphere;
+	PxRigidDynamic* body;
+	PxShape* shape = gPhysics->createShape(PxCapsuleGeometry(meshSize * 0.66, meshSize * 0.85f), *gMaterial);
+	PxTransform localTm(t.p);
+	body = gPhysics->createRigidDynamic(t.transform(localTm));
+	body->attachShape(*shape);
+
+	PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
+	gScene->addActor(*body);
+	sphere = tutorialGame->AddPxPlayerToWorld(new GameObject(), body, Vector3(t.p.x, t.p.y, t.p.z), scale);
+}
+
+void AddEnemyToWorld(const PxTransform& t, float scale) {
+	float meshSize = 3.0f * scale;
+	GameObject* sphere;
+	PxRigidDynamic* body;
+	PxShape* shape = gPhysics->createShape(PxCapsuleGeometry(meshSize * 0.66, meshSize * 0.85f), *gMaterial);
+	PxTransform localTm(t.p);
+	body = gPhysics->createRigidDynamic(t.transform(localTm));
+	body->attachShape(*shape);
+
+	PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
+	gScene->addActor(*body);
+	sphere = tutorialGame->AddPxEnemyToWorld(new GameObject(), body, Vector3(t.p.x, t.p.y, t.p.z), scale);
 }

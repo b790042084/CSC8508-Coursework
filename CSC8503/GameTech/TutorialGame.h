@@ -48,9 +48,14 @@ namespace NCL {
 		public:
 			TutorialGame();
 			GameObject* AddPxCubeToWorld(GameObject* cube, PxRigidActor* body, const Vector3& position, Vector3 dimensions);
-			GameObject* AddPxSphereToWorld(GameObject* cube, PxRigidActor* body, const Vector3& position, float radius);
+			GameObject* AddPxSphereToWorld(GameObject* sphere, PxRigidActor* body, const Vector3& position, float radius);
 			GameObject* AddPxCapsuleToWorld(GameObject* capsule, PxRigidActor* body, const Vector3& position, float radius, float halfHeight);
 			GameObject* AddPxFloorToWorld(GameObject* cube, PxRigidStatic* body, const Vector3& position, Vector3 dimensions);
+
+			GameObject* AddPxPickupToWorld(GameObject* p, PxRigidStatic* body, const Vector3& position, float radius);
+			GameObject* AddPxPlayerToWorld(GameObject* p, PxRigidActor* body, const Vector3& position, float scale);
+			GameObject* AddPxEnemyToWorld(GameObject* e, PxRigidActor* body, const Vector3& position, float scale);
+
 
 			~TutorialGame();
 
@@ -84,10 +89,6 @@ namespace NCL {
 			void InitGameObstacles(int level);
 			
 			void AddBridgeToWorld(Vector3 startPos);
-
-			GameObject* AddPlayerToWorld(GameObject* p, const Vector3& position);
-			GameObject* AddEnemyToWorld(GameObject* e, const Vector3& position);
-			GameObject* AddPickupToWorld(GameObject* e, const Vector3& position);
 
 			bool SelectObject();
 			void DebugObjectMovement();

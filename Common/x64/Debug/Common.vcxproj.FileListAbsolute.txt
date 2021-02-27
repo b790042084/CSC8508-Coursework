@@ -1,0 +1,2 @@
+C:\Users\sambu\source\repos\CSC8508\x64\Debug\Common.pdb
+C:\Users\sambu\source\repos\CSC8508\Common\x64\Debug\Common.pdb
