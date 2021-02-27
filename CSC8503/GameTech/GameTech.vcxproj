@@ -113,7 +113,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>CSC8503Common.lib;Common.lib;OpenGLRendering.lib;Networking-ENet.lib;ws2_32.lib;Winmm.lib;User32.lib;Gdi32.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib</AdditionalDependencies>
+      <AdditionalDependencies>CSC8503Common.lib;Common.lib;OpenGLRendering.lib;Networking-ENet.lib;ws2_32.lib;Winmm.lib;User32.lib;Gdi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\lib\</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
