@@ -134,7 +134,7 @@ int snippetMain(int flag, const char* const*,TutorialGame* t, float dt ) {
 		AddEnemyToWorld(PxTransform(PxVec3(20, 50, 0)), 5);
 
 	}
-	stepPhysics(dt);
+	stepPhysics(.015f);
 	//cleanupPhysics(false);
 #endif
 

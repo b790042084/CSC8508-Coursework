@@ -9,8 +9,7 @@
 using namespace NCL;
 using namespace CSC8503;
 
-PhysicsObject::PhysicsObject(Transform* parentTransform, PxRigidActor* p, const CollisionVolume* parentVolume)
-{
+PhysicsObject::PhysicsObject(Transform* parentTransform, PxRigidActor* p, const CollisionVolume* parentVolume) {
 	transform = parentTransform;
 	pxTrans = p;
 	volume = parentVolume;
